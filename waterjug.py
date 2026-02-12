@@ -21,17 +21,13 @@ def water_jug_bfs(capA, capB, target):
             return path[::-1]
 
         moves = [
-            (capA, b),
-            (a, capB),
-            (0, b),
-            (a, 0),
+            (capA, b),                              # Fill A
+            (a, capB),                              # Fill B
+            (0, b),                                 # Empty A
+            (a, 0),                                 # Empty B
+            (min(capA, a + b), max(0, a + b - capA)),  # Pour B → A
+            (max(0, a + b - capB), min(capB, a + b))   # Pour A → B
         ]
-
-        pour = min(a, capB - b)
-        moves.append((a - pour, b + pour))
-
-        pour = min(b, capA - a)
-        moves.append((a + pour, b - pour))
 
         for move in moves:
             if move not in visited:
